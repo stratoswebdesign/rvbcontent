@@ -1,0 +1,37 @@
+<!-- Saját formátumtanulmány: egy kulcsvizuál (KV), amelyet a formátumkeretek különböző kivágásban mutatnak.
+     Nem ügyfélfilm. Színek: --kv-bg, --kv-ink, --kv-cut, --kv-mute (a B-variáns ezeket cseréli).
+     A visszhangsávok a görgetés sebességével (--e) nyílnak szét; nyugalomban a rajz statikus. -->
+<svg class="kv-defs" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="kv-top"><polygon points="0,0 1600,0 1600,330 0,700"/></clipPath>
+    <clipPath id="kv-bot"><polygon points="0,700 1600,330 1600,900 0,900"/></clipPath>
+    <symbol id="kv" viewBox="0 0 1600 900">
+      <rect width="1600" height="900" style="fill: var(--kv-bg, #0c0810)"/>
+      <g style="stroke: var(--kv-grid, rgba(247, 247, 248, 0.05)); stroke-width: 1">
+        <line x1="160" y1="0" x2="160" y2="900"/><line x1="480" y1="0" x2="480" y2="900"/><line x1="800" y1="0" x2="800" y2="900"/>
+        <line x1="1120" y1="0" x2="1120" y2="900"/><line x1="1440" y1="0" x2="1440" y2="900"/>
+        <line x1="0" y1="180" x2="1600" y2="180"/><line x1="0" y1="720" x2="1600" y2="720"/>
+      </g>
+      <g style="stroke: var(--kv-mute, #858197); stroke-width: 2">
+        <line x1="392" y1="170" x2="408" y2="170"/><line x1="400" y1="162" x2="400" y2="178"/>
+        <line x1="1192" y1="770" x2="1208" y2="770"/><line x1="1200" y1="762" x2="1200" y2="778"/>
+      </g>
+      <g style="transform: translateY(calc(var(--e, 0) * 46px)); opacity: 0.22"><polygon points="0,762 1600,392 1600,397 0,767" style="fill: var(--kv-cut, #25f79c)"/></g>
+      <g style="transform: translateY(calc(var(--e, 0) * 26px)); opacity: 0.5"><polygon points="0,734 1600,364 1600,372 0,742" style="fill: var(--kv-cut, #25f79c)"/></g>
+      <g clip-path="url(#kv-top)">
+        <text x="800" y="640" text-anchor="middle" style="fill: var(--kv-ink, #f7f7f8); font-family: 'Big Shoulders Display', 'Arial Narrow', sans-serif; font-weight: 300; font-size: 440px; letter-spacing: 4px">REVERB</text>
+      </g>
+      <g clip-path="url(#kv-bot)" transform="translate(26 14)">
+        <text x="800" y="640" text-anchor="middle" style="fill: var(--kv-ink, #f7f7f8); font-family: 'Big Shoulders Display', 'Arial Narrow', sans-serif; font-weight: 300; font-size: 440px; letter-spacing: 4px">REVERB</text>
+      </g>
+      <polygon points="0,700 1600,330 1600,344 0,714" style="fill: var(--kv-cut, #25f79c)"/>
+      <text x="262" y="772" style="fill: var(--kv-cut, #25f79c); font-family: 'DM Mono', monospace; font-size: 30px; letter-spacing: 6px">TOVÁBB ÉLŐ TARTALOM</text>
+      <g style="fill: var(--kv-mute, #858197); font-family: 'DM Mono', monospace; font-size: 18px; letter-spacing: 3px">
+        <text x="56" y="72">REVERB CONTENT</text>
+        <text x="1544" y="72" text-anchor="end">SAJÁT FORMÁTUMTANULMÁNY</text>
+        <text x="56" y="850">RVBCONTENT.HU</text>
+        <text x="1544" y="850" text-anchor="end">KV · 01</text>
+      </g>
+    </symbol>
+  </defs>
+</svg>

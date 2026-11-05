@@ -1,0 +1,8 @@
+# Belső anyagok: megrendelői dokumentumok, forrásképek és átadási jegyzet – nem kerülnek a nyilvános repóba
+_forras/
+_atadas/
+
+# Helyi munkakörnyezet
+.claude/
+.DS_Store
+__pycache__/

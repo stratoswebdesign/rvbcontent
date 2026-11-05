@@ -1,0 +1,11 @@
+<!-- Sütisáv – csak akkor kerül az oldalakba, ha mérő- vagy hirdetési kód kerül be
+     (tools/build-pages.py: COOKIE_BANNER = True). A megrendelő adatkezelési tervezete szerint
+     jelenleg nincs Google Analytics vagy Meta Pixel, ezért a sáv ki van kapcsolva.
+     A lábléc jogi sorába ilyenkor a „Sütibeállítások” gomb is visszakerül: data-cookie-open. -->
+  <div class="cookie" data-cookie hidden role="region" aria-label="Sütibeállítások">
+    <p>A működéshez szükséges sütiket mindig használjuk. Mérési és hirdetési sütiket csak a hozzájárulásoddal. <a href="/adatkezeles/#sutik">Részletek</a></p>
+    <div class="cookie__actions">
+      <button class="cookie__btn" type="button" data-consent="necessary">Csak a szükségesek</button>
+      <button class="cookie__btn" type="button" data-consent="all">Elfogadom</button>
+    </div>
+  </div>

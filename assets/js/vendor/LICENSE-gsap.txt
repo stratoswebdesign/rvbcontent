@@ -1,0 +1,14 @@
+GSAP 3.13.0 – licencnyilatkozatok az npm-csomagból (gsap@3.13.0).
+A csomag nem tartalmaz külön LICENSE-fájlt; az alábbiak szó szerint a csomag fájljaiból valók.
+
+package.json, "license" mező:
+  Standard 'no charge' license: https://gsap.com/standard-license.
+
+README.md, License szakasz:
+  GreenSock's standard "no charge" license can be viewed at https://gsap.com/standard-license
+  Copyright (c) 2008-2025, GreenSock. All rights reserved.
+
+dist/gsap.min.js és dist/ScrollTrigger.min.js fejléce (a helyi másolatokban változatlanul megtartva):
+  @license Copyright 2025, GreenSock. All rights reserved.
+  Subject to the terms at https://gsap.com/standard-license.
+  @author: Jack Doyle, jack@greensock.com

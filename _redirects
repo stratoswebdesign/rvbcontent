@@ -1,0 +1,23 @@
+# Átirányítási terv a brief 6. fejezete szerint (Netlify-formátum).
+# Ha a /videogyartas/ pilléroldal elkészül, a /szolgaltatasok/ célja oda kerüljön (most a főoldal).
+
+/szolgaltatasok      /                  301
+/szolgaltatasok/*    /                  301
+/kontakt             /kapcsolat/        301
+/kontakt/*           /kapcsolat/        301
+/contacts            /kapcsolat/        301
+/contacts/*          /kapcsolat/        301
+/csapatunk           /rolunk/           301
+/csapatunk/*         /rolunk/           301
+/team                /rolunk/           301
+/team/*              /rolunk/           301
+/shop                /                  301
+/shop/*              /                  301
+
+# Téma-demo tartalom: végleg megszűnt (410), hogy a Google gyorsan kivegye az indexből.
+/portfolio           /404.html          410
+/portfolio/*         /404.html          410
+/services            /404.html          410
+/services/*          /404.html          410
+/404-2               /404.html          410
+/404-2/*             /404.html          410
