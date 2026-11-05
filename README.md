@@ -69,6 +69,7 @@ python3 tools/make-images.py
 ## Kitelepítés
 
 - **Ne kerüljön ki:** `_forras/`, `_atadas/`, `tools/`, `.claude/`, `README.md`.
+- **Útvonal-előtag:** a GitHub Pages a `stratoswebdesign.github.io/rvbcontent/` alútvonalon szolgálja ki az oldalt, ezért `PATH_PREFIX = "/rvbcontent"` a `tools/build-pages.py`-ban. Saját domainen (rvbcontent.hu) vagy Netlifyn `""`, majd újraépítés. A CSS relatív útvonalakat használ, ezt nem kell állítani. A `.nojekyll` miatt a Pages a fájlokat változtatás nélkül szolgálja ki.
 - **Netlify:** a `_redirects` (301/410) és a Netlify Forms azonnal használható. Az űrlapot `data-form-mode="netlify"`-re kell állítani (`tools/pages/kapcsolat.html`), majd újraépíteni.
 - **Videó:** a tárhelynek Range-kéréseket kell kezelnie (a Netlify igen).
 - **Sütisáv:** ki van kapcsolva, mert nincs mérőkód. Mérés bekötésekor: `COOKIE_BANNER = True` a `tools/build-pages.py`-ban.

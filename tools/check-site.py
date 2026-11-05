@@ -15,6 +15,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP_DIRS = {"tools", "_forras", "_atadas", ".claude", ".git", "node_modules"}
 KNOWN_BLOCKER_PAGES = {"adatkezeles/index.html", "impresszum/index.html"}
 BRACKET = re.compile(r"\[[^\[\]\n]{2,}\]")
+# Ugyanaz az útvonal-előtag, amellyel a build-pages.py generál (GitHub Pages: "/rvbcontent").
+PATH_PREFIX = re.search(r'^PATH_PREFIX = "([^"]*)"', open(os.path.join(ROOT, "tools", "build-pages.py"), encoding="utf-8").read(), re.M).group(1)
 
 
 class Page(HTMLParser):
@@ -70,7 +72,9 @@ def resolve(page_rel, url):
     if not path:
         return page_rel, u.fragment
     if path.startswith("/"):
-        rel = path.lstrip("/")
+        if PATH_PREFIX and not (path + "/").startswith(PATH_PREFIX + "/"):
+            return "(előtag nélkül)" + path, u.fragment  # a tárhelyen nem létező cél → hiba
+        rel = path[len(PATH_PREFIX):].lstrip("/")
     else:
         rel = os.path.normpath(os.path.join(os.path.dirname(page_rel), path)).replace(os.sep, "/")
     if rel == "" or rel.endswith("/"):
@@ -128,7 +132,7 @@ def main():
                             external.add("css url=" + url)
                         continue
                     target = url.lstrip("/") if url.startswith("/") else os.path.relpath(os.path.join(dirpath, url), ROOT)
-                    if not os.path.exists(os.path.join(ROOT, target)):
+                    if (url.startswith("/") and PATH_PREFIX) or not os.path.exists(os.path.join(ROOT, target)):
                         errors.append("%s: hiányzó CSS-asset: %s" % (os.path.relpath(full, ROOT), url))
 
     print("Ellenőrzött oldalak: %d" % len(parsed))

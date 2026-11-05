@@ -17,6 +17,9 @@ sys.path.insert(0, HERE)
 import icons  # noqa: E402
 
 BASE = "https://rvbcontent.hu"
+# Útvonal-előtag a gyökér-relatív hivatkozások elé (href, src, poster, action). GitHub Pages
+# projektoldalon (stratoswebdesign.github.io/rvbcontent/) "/rvbcontent"; saját domainen vagy Netlifyn "".
+PATH_PREFIX = "/rvbcontent"
 VENDOR = "/assets/js/vendor"  # GSAP 3.13.0, ScrollTrigger, Lenis 1.1.20 – helyi másolat, nincs külső CDN
 OG_IMAGE = BASE + "/assets/img/og-reverb-content.jpg"
 
@@ -117,6 +120,12 @@ def expand(body):
     return re.sub(r"<!--icon:([\w-]+)-->", icon, body)
 
 
+def prefix_paths(page):
+    if not PATH_PREFIX:
+        return page
+    return re.sub(r'(\s(?:href|src|poster|action)=")/(?!/)', r"\g<1>" + PATH_PREFIX + "/", page)
+
+
 def indent(text, pad="    "):
     return "\n".join((pad + line) if line.strip() else "" for line in text.splitlines())
 
@@ -138,6 +147,7 @@ for name in sorted(os.listdir(os.path.join(HERE, "pages"))):
         + FOOTER
         + "</body>\n</html>\n"
     )
+    page = prefix_paths(page)
     out = os.path.join(SITE, meta["out"])
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as fh:
