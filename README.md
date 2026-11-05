@@ -2,7 +2,7 @@
 
 Statikus HTML/CSS/JS weboldal, amelyet Python-szkriptek generálnak a `tools/` forrásaiból. Pozicionálás: videógyártásra épülő tartalom- és kampánypartner közép- és nagyvállalatoknak – „Egy forgatás. Egy teljes negyedév tartalma.” Hangnem: tegező, felnőtt üzleti hang.
 
-**A blokkerek, az adatbekérés, a forrásleltár, a tesztjelentés és a régi oldal 27 pontos hibalistájának végleges állapota: [`_atadas/ATADAS.md`](_atadas/ATADAS.md).**
+**A blokkerek, az adatbekérés, a forrásleltár, a tesztjelentés és a régi oldal 27 pontos hibalistájának végleges állapota a belső átadási jegyzetben (`_atadas/ATADAS.md`) van. A jegyzet nem része ennek a repónak.**
 
 ## Oldalak
 
