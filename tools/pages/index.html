@@ -32,12 +32,6 @@
 <!-- Hero: keresőnézet. A showreel a .reel rétegbe kerül. -->
 <section class="hero" data-hero aria-labelledby="hero-title">
   <div class="reel" aria-hidden="true">
-    <!-- Showreel (60–90 mp, némított loop, max. ~3–4 MB, poszterképpel; mobilon csak poszter):
-    <video class="reel__video" autoplay muted loop playsinline preload="none" poster="/assets/video/reverb-content-showreel-poster.jpg">
-      <source src="/assets/video/reverb-content-showreel.webm" type="video/webm">
-      <source src="/assets/video/reverb-content-showreel.mp4" type="video/mp4">
-    </video>
-    -->
     <div class="reel__glow"></div>
     <div class="reel__spot"></div>
   </div>
@@ -52,11 +46,15 @@
         <h1 class="d-1" id="hero-title" data-split data-echo>Videógyártás, ami a forgatás után is dolgozik.</h1>
       </div>
       <div class="hero__aside">
+        <!-- Promó: Reverb_promo_v10.MP4 (15 mp) → 960×540, H.264 + AAC, 2,3 MB. Némított loop (data-preview:
+             csak látótérben, mozgás engedélyezve); hang csak kattintásra, akkor egyszer fut végig. -->
         <figure class="hero__kv" data-echo>
-          <a href="#modszer" class="hero__kv-link" aria-label="Saját formátumtanulmány: egy kreatív, kilenc kivágás – ugrás a Módszer szekcióhoz">
-            <svg class="hero__kv-art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><use href="#kv" x="0" y="0" width="1600" height="900"/></svg>
-          </a>
-          <figcaption><span class="label label--signal">Saját formátumtanulmány</span><span class="label">KV-01 · 16:9</span></figcaption>
+          <div class="hero__kv-frame" data-cursor="Hanggal" data-promo-sound>
+            <video class="hero__kv-art" muted loop playsinline preload="none" poster="/assets/img/reverb-promo-poster.jpg" width="960" height="540" aria-label="Reverb Content promóvideó, 15 másodperc" data-preview data-promo>
+              <source src="/assets/video/reverb-promo.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption><span class="label label--signal">Reverb Content · promó · 15 mp</span><button class="label hero__kv-sound" type="button" data-promo-sound data-promo-label>Lejátszás hanggal</button></figcaption>
         </figure>
         <p class="lead">Egy forgatásból egy negyedévnyi tartalom. Mi forgatjuk, mi futtatjuk.</p>
         <div class="actions">

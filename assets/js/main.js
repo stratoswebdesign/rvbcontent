@@ -111,14 +111,15 @@
   });
   applyPause(isPaused);
 
-  /* ---------- Munkák: némított előnézet ----------
+  /* ---------- Némított előnézetek: hero-promó és Munkák ----------
      Csak látótérben, és csak ha a mozgás engedélyezett; különben a poszterkép látszik.
      preload="none": a videó csak az első lejátszáskor töltődik. */
   var previews = Array.prototype.slice.call(document.querySelectorAll("video[data-preview]"));
   if (previews.length && !reduce && "IntersectionObserver" in window) {
     var inView = [];
+    // Hanggal indított (nem némított) videót csak a látótér elhagyása állít meg, a mozgás-szüneteltetés nem.
     var syncPreview = function (v) {
-      if (!isPaused && inView.indexOf(v) > -1) {
+      if ((!isPaused || !v.muted) && inView.indexOf(v) > -1) {
         var pr = v.play();
         if (pr && pr.catch) pr.catch(function () { /* automatikus lejátszás tiltva: marad a poszter */ });
       } else if (!v.paused) v.pause();
@@ -133,6 +134,30 @@
     }, { threshold: 0.35 });
     previews.forEach(function (v) { io.observe(v); });
     pausers.push(function () { previews.forEach(syncPreview); });
+  }
+
+  /* Hero-promó: hang csak kattintásra. Hanggal egyszer fut végig, utána visszaáll a némított loopra. */
+  var promo = document.querySelector("video[data-promo]");
+  if (promo) {
+    var promoLabel = document.querySelector("[data-promo-label]");
+    var setSound = function (on) {
+      promo.muted = !on;
+      promo.loop = !on;
+      if (promoLabel) promoLabel.textContent = on ? "Némítás" : "Lejátszás hanggal";
+    };
+    var settle = function () {
+      if (typeof syncPreview === "function") syncPreview(promo); else promo.pause();
+    };
+    document.querySelectorAll("[data-promo-sound]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        if (!promo.muted) { setSound(false); settle(); return; }
+        setSound(true);
+        promo.currentTime = 0;
+        var pr = promo.play();
+        if (pr && pr.catch) pr.catch(function () { setSound(false); });
+      });
+    });
+    promo.addEventListener("ended", function () { setSound(false); settle(); });
   }
 
   /* Esettanulmány: egyszerre csak egy hangos videó szóljon */

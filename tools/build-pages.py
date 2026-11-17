@@ -8,6 +8,7 @@ Kimenet: az oldalak, a régi címek átirányító oldalai (REDIRECTS), sitemap.
 Futtatás a projekt gyökeréből:  python3 tools/build-pages.py
 """
 import datetime
+import hashlib
 import json
 import os
 import re
@@ -39,6 +40,12 @@ TODAY = datetime.date.today().isoformat()  # a sitemap lastmod értéke: az ép�
 
 def read(*parts):
     return open(os.path.join(HERE, *parts), encoding="utf-8").read()
+
+
+def asset(path):
+    """Saját CSS/JS tartalom-hash-sel: telepítés után a böngésző nem keveri a régi fájlt az új HTML-lel."""
+    digest = hashlib.md5(open(os.path.join(SITE, path.lstrip("/")), "rb").read()).hexdigest()[:8]
+    return "%s?v=%s" % (path, digest)
 
 
 HEADER = read("partials", "header.html")
@@ -110,13 +117,13 @@ def head(meta):
   <link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preload" href="/assets/fonts/big-shoulders-display-300-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/fonts.css">
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="{asset("/assets/css/fonts.css")}">
+  <link rel="stylesheet" href="{asset("/assets/css/style.css")}">
   {BOOT}
   <script src="{VENDOR}/gsap.min.js" defer></script>
   <script src="{VENDOR}/ScrollTrigger.min.js" defer></script>
   <script src="{VENDOR}/lenis.min.js" defer></script>
-  <script src="/assets/js/main.js" defer></script>
+  <script src="{asset("/assets/js/main.js")}" defer></script>
 {ld_html}</head>
 <body>
 """

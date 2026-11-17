@@ -8,7 +8,7 @@ Statikus HTML/CSS/JS weboldal, amelyet Python-szkriptek generálnak a `tools/` f
 
 | URL | Tartalom |
 |---|---|
-| `/` | Hero a saját REVERB-kulcsvizuál előnézetével; partnerlogók; „három beszállító → egy csapat”; saját formátumtanulmány (egy kreatív, kilenc kivágás); két esettanulmány videó-előnézettel; vállalások; szolgáltatások vízszintes idővonala; folyamat; együttműködési formák; futó CTA |
+| `/` | Hero a Reverb promóvideóval (némított loop, hanggal kattintásra, `assets/video/reverb-promo.mp4`); partnerlogók; „három beszállító → egy csapat”; saját formátumtanulmány (egy kreatív, kilenc kivágás); két esettanulmány videó-előnézettel; vállalások; szolgáltatások vízszintes idővonala; folyamat; együttműködési formák; futó CTA |
 | `/munkak/olajcserepont/`, `/munkak/varexo/` | A megrendelő esettanulmányai fejezetekre bontva, eredménytáblával és videókkal |
 | `/egyuttmukodes/` | Brand Film / Content System / Growth Partner „-tól” árakkal, árképzés, GYIK |
 | `/rolunk/` | Csapat (két tag, nyilvános forrásból), partnerek, a név jelentése |
@@ -45,7 +45,7 @@ Statikus HTML/CSS/JS weboldal, amelyet Python-szkriptek generálnak a `tools/` f
   - JS: `main.js` 33 KB + vendor 131 KB
   - CSS: 60 KB
   - betűk: 160 KB
-  - videók: 29 MB (`assets/video/`, 720×1280 H.264), `preload="none"`: betöltéskor csak a poszterek töltődnek (0,4 MB)
+  - videók: 31 MB (`assets/video/`: esettanulmányok 720×1280, hero-promó 960×540 hanggal, H.264), `preload="none"`: betöltéskor csak a poszterek töltődnek (0,4 MB)
 - **Képek:**
   - `assets/img/og-reverb-content.jpg` – 1200×630
   - `assets/img/reverb-content-awwwards-cover-1600x1200.png` – Awwwards-borító. Méretkövetelmény: [awwwards.com/faqs](https://www.awwwards.com/faqs/) → Submissions.
