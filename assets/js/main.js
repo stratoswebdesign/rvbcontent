@@ -614,18 +614,21 @@
         Object.keys(names).forEach(function (k) { var v = data.get(k); if (v) lines.push(names[k] + ": " + v); });
         return "mailto:info@rvbcontent.hu?subject=" + encodeURIComponent("Projektindító konzultáció") + "&body=" + encodeURIComponent(lines.join("\n"));
       };
+      var TEXTS = {
+        preview: ["Előnézet: az üzenet nem lett elküldve.", " Ezen a címen az űrlapfogadás nincs bekapcsolva. Küldd el e-mailben a kitöltött adatokkal, vagy hívj minket."],
+        mailto: ["Megnyitottuk a levelezőprogramodat.", " A kitöltött adatokkal kész az e-mail, csak el kell küldened. Ha nem nyílt meg, használd az alábbi linket, vagy hívj minket."],
+        error: ["Nem sikerült elküldeni az űrlapot.", " Küldd el e-mailben a kitöltött adatokkal, vagy hívj minket."]
+      };
       var showStatus = function (kind) {
-        var preview = kind === "preview";
-        status.className = "form__status is-visible" + (preview ? " form__status--preview" : "");
-        status.setAttribute("role", preview ? "status" : "alert");
+        var calm = kind !== "error";
+        status.className = "form__status is-visible" + (calm ? " form__status--preview" : "");
+        status.setAttribute("role", calm ? "status" : "alert");
         status.innerHTML = "";
         var p = document.createElement("p");
         var b = document.createElement("strong");
-        b.textContent = preview ? "Előnézet: az üzenet nem lett elküldve." : "Nem sikerült elküldeni az űrlapot.";
+        b.textContent = TEXTS[kind][0];
         p.appendChild(b);
-        p.appendChild(document.createTextNode(preview
-          ? " Ezen a címen az űrlapfogadás nincs bekapcsolva. Küldd el e-mailben a kitöltött adatokkal, vagy hívj minket."
-          : " Küldd el e-mailben a kitöltött adatokkal, vagy hívj minket."));
+        p.appendChild(document.createTextNode(TEXTS[kind][1]));
         var actions = document.createElement("div");
         actions.className = "actions";
         var m = document.createElement("a");
@@ -644,10 +647,12 @@
       };
       var reset = function () { button.disabled = false; label.textContent = "Konzultációt kérek"; };
 
+      // data-form-mode="mailto": nincs űrlapfogadó, a látogató levelezőprogramja nyílik meg a kitöltött adatokkal.
       // Fogadás csak kifejezetten beállított módban: data-form-mode="netlify" (a data-form-hosts
       // listában szereplő éles címen) vagy "endpoint" (data-form-endpoint, JSON {ok:true} válasz).
       // Minden más esetben – helyi előnézet is – semmi nem megy el, és ezt az oldal ki is mondja.
       var mode = form.getAttribute("data-form-mode") || "off";
+      if (mode === "mailto") { window.location.href = mailto(); showStatus("mailto"); return; }
       var hosts = (form.getAttribute("data-form-hosts") || "").split(",").map(function (h) { return h.trim(); }).filter(Boolean);
       var endpoint = form.getAttribute("data-form-endpoint") || "";
       var live = (mode === "netlify" && hosts.indexOf(window.location.hostname) !== -1) || (mode === "endpoint" && /^https:\/\//.test(endpoint));

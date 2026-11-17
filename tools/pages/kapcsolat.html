@@ -23,8 +23,8 @@
     <div class="grid contact">
       <div class="contact__form">
         <h2 class="visually-hidden" id="urlap-title">Konzultációkérés</h2>
-        <!-- Űrlapfogadás: data-form-mode="off" (alap, semmi nem megy el) | "netlify" + data-form-hosts | "endpoint" + data-form-endpoint (https, JSON {ok:true}). -->
-        <form class="form" name="konzultacio" method="POST" action="/kapcsolat/koszonjuk/" data-netlify="true" netlify-honeypot="weboldal" data-lead-form data-form-mode="off" data-form-hosts="rvbcontent.hu,www.rvbcontent.hu" data-form-endpoint="" novalidate>
+        <!-- Űrlapfogadás: data-form-mode="mailto" (élő: a látogató levelezőprogramja nyílik meg, a weboldal nem továbbít adatot) | "off" (semmi nem megy el) | "netlify" + data-form-hosts | "endpoint" + data-form-endpoint (https, JSON {ok:true}). -->
+        <form class="form" name="konzultacio" method="POST" action="/kapcsolat/koszonjuk/" data-netlify="true" netlify-honeypot="weboldal" data-lead-form data-form-mode="mailto" data-form-hosts="rvbcontent.hu,www.rvbcontent.hu" data-form-endpoint="" novalidate>
           <input type="hidden" name="form-name" value="konzultacio">
           <p class="hp" aria-hidden="true"><label>Ezt a mezőt hagyd üresen: <input name="weboldal" tabindex="-1" autocomplete="off"></label></p>
 
@@ -105,7 +105,7 @@
 
           <div class="actions">
             <button class="btn" type="submit" data-magnetic><span data-label>Konzultációt kérek</span><span class="btn__arrow" aria-hidden="true">→</span></button>
-            <span class="form__note">A *-gal jelölt mezők kötelezők.</span>
+            <span class="form__note">A *-gal jelölt mezők kötelezők. A gomb a levelezőprogramodban nyit meg egy kitöltött e-mailt.</span>
           </div>
         </form>
       </div>
@@ -114,7 +114,7 @@
         <div class="side-block">
           <span class="label">Mi történik ezután?</span>
           <ol class="next-steps">
-            <li>Elküldöd az űrlapot.</li>
+            <li>Elküldöd a kitöltött e-mailt.</li>
             <li>Visszahívunk, és egyeztetünk időpontot.</li>
             <li>30 perc konzultáció.</li>
             <li>Tételes ajánlat írásban.</li>

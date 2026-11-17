@@ -12,10 +12,12 @@ Statikus HTML/CSS/JS weboldal, amelyet Python-szkriptek generálnak a `tools/` f
 | `/munkak/olajcserepont/`, `/munkak/varexo/` | A megrendelő esettanulmányai fejezetekre bontva, eredménytáblával és videókkal |
 | `/egyuttmukodes/` | Brand Film / Content System / Growth Partner „-tól” árakkal, árképzés, GYIK |
 | `/rolunk/` | Csapat (két tag, nyilvános forrásból), partnerek, a név jelentése |
-| `/kapcsolat/` | Konzultációkérő űrlap; amíg nincs fogadó, nem küld (`data-form-mode="off"`), e-mail- és telefon-tartalékot ad |
+| `/kapcsolat/` | Konzultációkérő űrlap; a kitöltött adatokkal a látogató levelezőprogramját nyitja meg (`data-form-mode="mailto"`), a weboldal nem továbbít adatot |
 | `/kapcsolat/koszonjuk/` | Köszönőoldal (noindex), csak valódi fogadó-válasz után |
-| `/adatkezeles/`, `/impresszum/` | A megrendelő adatkezelési tervezete és cégadatai; a nyitott pontok jelölve – nevezési blokker |
+| `/adatkezeles/`, `/impresszum/` | Adatkezelési tájékoztató (hatályos 2026. november 17-től) és impresszum a cégjegyzék adataival (e-cegjegyzek.hu, 01-09-470745) |
 | `/404.html` | Hibaoldal (noindex) |
+| `/kontakt/`, `/contacts/`, `/csapatunk/`, `/team/`, `/szolgaltatasok/`, `/shop/` | A régi oldal címei: azonnal továbbító, noindex oldalak (`REDIRECTS` a `tools/build-pages.py`-ban) |
+| `/sitemap.xml`, `/llms.txt`, `/robots.txt` | Az első kettőt a build generálja a meta-leírásokból; a robots.txt kizárja a `/tools/` mappát |
 
 ## Dizájnrendszer
 
@@ -62,15 +64,17 @@ python3 tools/check-site.py
 python3 tools/make-images.py
 ```
 
-- **`build-pages.py`:** minden oldalt a `tools/pages/` és `tools/partials/` forrásokból generál, és beágyazza az ikonokat.
+- **`build-pages.py`:** minden oldalt a `tools/pages/` és `tools/partials/` forrásokból generál, beágyazza az ikonokat, és elkészíti a sitemap.xml-t, az llms.txt-t és a régi címek átirányító oldalait.
 - **`check-site.py`:** ellenőrzi a belső linkeket, az asseteket, a duplikált id-ket, a látható helyőrzőket és a külső erőforrásokat.
 - **`make-images.py`:** elkészíti az OG-képet és a borítót; macOS-en fut (qlmanage, sips).
 
 ## Kitelepítés
 
-- **Ne kerüljön ki:** `_forras/`, `_atadas/`, `tools/`, `.claude/`, `README.md`.
-- **Útvonal-előtag:** a GitHub Pages a `stratoswebdesign.github.io/rvbcontent/` alútvonalon szolgálja ki az oldalt, ezért `PATH_PREFIX = "/rvbcontent"` a `tools/build-pages.py`-ban. Saját domainen (rvbcontent.hu) vagy Netlifyn `""`, majd újraépítés. A CSS relatív útvonalakat használ, ezt nem kell állítani. A `.nojekyll` miatt a Pages a fájlokat változtatás nélkül szolgálja ki.
-- **Netlify:** a `_redirects` (301/410) és a Netlify Forms azonnal használható. Az űrlapot `data-form-mode="netlify"`-re kell állítani (`tools/pages/kapcsolat.html`), majd újraépíteni.
-- **Videó:** a tárhelynek Range-kéréseket kell kezelnie (a Netlify igen).
+- **Tárhely: GitHub Pages, `main` ág, gyökér, saját domain (`CNAME`: rvbcontent.hu).** Minden push a `main`-re élesít. A repó gyökere nyilvános, ezért a `tools/` és a `README.md` is elérhető; a robots.txt kizárja a `/tools/` mappát. A `_forras/` és az `_atadas/` nincs a repóban (`.gitignore`). A `.nojekyll` miatt a Pages a fájlokat változtatás nélkül szolgálja ki.
+- **DNS (a domainszolgáltatónál):** az `rvbcontent.hu` A rekordjai 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153; AAAA rekordjai 2606:50c0:8000::153, 2606:50c0:8001::153, 2606:50c0:8002::153, 2606:50c0:8003::153; a `www` CNAME rekordja `stratoswebdesign.github.io`. A www → rvbcontent.hu átirányítást a GitHub automatikusan elvégzi. A tanúsítvány kiadása után a repó Settings → Pages oldalán be kell kapcsolni az „Enforce HTTPS” opciót.
+- **Útvonal-előtag:** `PATH_PREFIX = ""` a `tools/build-pages.py`-ban. Domain nélküli GitHub Pages projektoldalon (`stratoswebdesign.github.io/rvbcontent/`) `"/rvbcontent"` kell, majd újraépítés. A CSS relatív útvonalakat használ.
+- **Átirányítások:** a GitHub Pages nem kezel szerveroldali 301-et, ezért a régi címekre azonnal továbbító oldalak készülnek (`REDIRECTS`). A 410-es címek 404-et adnak. A `_redirects` Netlify-formátumú tartalék, ha az oldal Netlifyra költözik.
+- **Űrlap:** `data-form-mode="mailto"`: a látogató levelezőprogramja nyílik meg a kitöltött adatokkal, összhangban az adatkezelési tájékoztató 6. pontjával. Netlifyn `"netlify"` is választható, de akkor a tájékoztatót módosítani kell.
+- **Videó:** a tárhelynek Range-kéréseket kell kezelnie; a GitHub Pages ezt teszi (206 válasz).
 - **Sütisáv:** ki van kapcsolva, mert nincs mérőkód. Mérés bekötésekor: `COOKIE_BANNER = True` a `tools/build-pages.py`-ban.
 - **Futásidőben nincs külső erőforrás.** Licencek: `assets/fonts/OFL-*.txt`, `assets/js/vendor/LICENSE-*`.
