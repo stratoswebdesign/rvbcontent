@@ -1303,3 +1303,25 @@ fieldset.field { border: 0; margin: 0; padding: 0; min-width: 0; }
   ::view-transition-old(root),
   ::view-transition-new(root) { animation: none; }
 }
+
+/* ---------- Szolgáltatásoldalak (2026-11-26) ---------- */
+
+.chapter__body p + p { margin-top: 1em; }
+.chapter__body ul.list { display: grid; gap: 8px; margin: 1.2em 0; }
+.chapter__body ul.list li { position: relative; padding-left: 20px; }
+.chapter__body ul.list li::before { content: ""; position: absolute; left: 0; top: 0.8em; width: 9px; height: 1px; background: var(--signal); }
+.chapter__body ul.list b { color: var(--paper); font-weight: 500; }
+.chapter__body a:not(.btn):not(.link) { color: var(--paper); text-decoration-color: var(--signal); text-underline-offset: 3px; }
+.readout--text td { font-family: var(--f-body); font-size: 16px; line-height: 1.45; color: var(--text); white-space: normal; text-align: left; }
+.readout--text thead th:last-child { text-align: left; }
+.readout--text tbody th { color: var(--paper); width: 38%; }
+.chapter__body .factors { margin: 1.4em 0; }
+.chapter__body .price { margin: 1.4em 0 0; font-family: var(--f-display); font-weight: 300; font-size: clamp(40px, 5vw, 72px); line-height: 0.95; color: var(--paper); }
+.chapter__body .price small { display: block; margin-bottom: 10px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute); }
+.svc-related .offer-card { text-decoration: none; color: inherit; }
+.page-hero .actions { margin-top: 32px; }
+.clip h3 a { color: inherit; text-decoration: none; }
+.clip h3 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.site-footer__brand { grid-column: 1 / span 3; }
+@media (max-width: 960px) { .site-footer__brand { grid-column: 1 / -1; } }
+.readout--text td { font-variant-numeric: normal; letter-spacing: normal; }
