@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- A tools/build-pages.py generálja: minden indexelhető oldal (noindex és hibaoldal nélkül). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://rvbcontent.hu/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://rvbcontent.hu/adatkezeles/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://rvbcontent.hu/egyuttmukodes/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://rvbcontent.hu/impresszum/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://rvbcontent.hu/kapcsolat/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://rvbcontent.hu/munkak/olajcserepont/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://rvbcontent.hu/munkak/varexo/</loc><lastmod>2026-11-17</lastmod></url>
-  <url><loc>https://rvbcontent.hu/rolunk/</loc><lastmod>2026-11-17</lastmod></url>
+  <url><loc>https://rvbcontent.hu/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/adatkezeles/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/ceges-fotozas/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/egyuttmukodes/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/hirdeteskezeles/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/impresszum/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/kapcsolat/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/munkak/olajcserepont/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/munkak/varexo/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/rolunk/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/social-media-tartalomgyartas/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/videogyartas/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/videogyartas/imazsfilm/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/videogyartas/reklamfilm/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/videogyartas/termekvideo/</loc><lastmod>2026-11-26</lastmod></url>
+  <url><loc>https://rvbcontent.hu/videogyartas/toborzo-video/</loc><lastmod>2026-11-26</lastmod></url>
 </urlset>

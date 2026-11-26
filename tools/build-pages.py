@@ -26,7 +26,7 @@ PATH_PREFIX = ""
 # A régi oldal címei (a _redirects 301-es sorai). A GitHub Pages nem ismer szerveroldali átirányítást,
 # ezért ezekre azonnal továbbító, noindex oldal készül; a 410-es címek a 404-es oldalt kapják.
 REDIRECTS = {
-    "szolgaltatasok": "/",
+    "szolgaltatasok": "/videogyartas/",
     "kontakt": "/kapcsolat/",
     "contacts": "/kapcsolat/",
     "csapatunk": "/rolunk/",
@@ -81,17 +81,47 @@ def head(meta):
     canonical = "" if meta.get("nocanonical") else '  <link rel="canonical" href="%s%s">\n' % (BASE, meta["path"])
     robots = '  <meta name="robots" content="noindex, follow">\n' if meta.get("noindex") else ""
     ld = []
-    if meta.get("crumb"):
+    # Morzsamenü: "crumbs" = [[név, útvonal], …] (többszintű), vagy "crumb" = név (egyszintű).
+    crumbs = meta.get("crumbs") or ([[meta["crumb"], meta["path"]]] if meta.get("crumb") else [])
+    if crumbs:
+        items = [{"@type": "ListItem", "position": 1, "name": "Főoldal", "item": BASE + "/"}]
+        for i, (name, path) in enumerate(crumbs, start=2):
+            items.append({"@type": "ListItem", "position": i, "name": name, "item": BASE + path})
+        ld.append({"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items})
+    if meta.get("service"):
+        svc = meta["service"]
         ld.append({
             "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                {"@type": "ListItem", "position": 1, "name": "Főoldal", "item": BASE + "/"},
-                {"@type": "ListItem", "position": 2, "name": meta["crumb"], "item": BASE + meta["path"]},
-            ],
+            "@type": "Service",
+            "name": svc["name"],
+            "serviceType": svc.get("serviceType", svc["name"]),
+            "description": meta["description"],
+            "url": BASE + meta["path"],
+            "provider": {"@id": BASE + "/#org"},
+            "areaServed": {"@type": "Country", "name": "Magyarország"},
+            "inLanguage": "hu-HU",
+            **({"offers": {"@type": "Offer", "priceCurrency": "HUF", "priceSpecification": {
+                "@type": "PriceSpecification", "minPrice": svc["minPrice"], "priceCurrency": "HUF"}}}
+               if svc.get("minPrice") else {}),
+        })
+    for v in meta.get("videos", []):
+        ld.append({
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            "name": v["name"],
+            "description": v["description"],
+            "thumbnailUrl": BASE + v["thumbnail"],
+            "contentUrl": BASE + v["src"],
+            "uploadDate": v.get("uploadDate", "2026-11-17"),
+            "duration": v["duration"],
+            "inLanguage": "hu-HU",
+            "publisher": {"@id": BASE + "/#org"},
         })
     if meta.get("jsonld"):
         ld.append(meta["jsonld"])
+    if meta.get("faq"):
+        ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in meta["faq"]]})
     ld_html = "".join('  <script type="application/ld+json">%s</script>\n' % json.dumps(x, ensure_ascii=False) for x in ld)
     og_desc = meta.get("ogDescription", meta["description"])
     intro = " data-intro" if meta.get("intro") else ""
@@ -127,6 +157,18 @@ def head(meta):
 {ld_html}</head>
 <body>
 """
+
+
+def faq_pairs(body):
+    """A FAQPage schema az oldalon látható GYIK-ból (.faq <details>) készül, így a kettő nem csúszhat el."""
+    def clean(x):
+        x = re.sub(r"<[^>]+>", "", x)
+        x = x.replace("&nbsp;", "\u00a0").replace("&amp;", "&")
+        return re.sub(r"\s+", " ", x).strip()
+    pairs = []
+    for q, a in re.findall(r'<summary>(.*?)</summary>\s*<div class="faq__a">(.*?)</div>', body, re.S):
+        pairs.append([clean(q), clean(a)])
+    return pairs
 
 
 def expand(body):
@@ -187,9 +229,12 @@ def llms(metas):
     # llms.txt (llmstxt.org): rövid összefoglaló nyelvi modelleknek; a leírások az oldalak meta-leírásai.
     home = next(m for m in metas if m["path"] == "/")
     org = next(x for x in home["jsonld"]["@graph"] if x["@type"] == "Organization")
-    groups = {"Oldalak": [], "Esettanulmányok": [], "Optional": []}
+    groups = {"Oldalak": [], "Szolgáltatások": [], "Esettanulmányok": [], "Optional": []}
     for m in metas:
-        key = "Esettanulmányok" if m["path"].startswith("/munkak/") else "Optional" if m["path"] in ("/adatkezeles/", "/impresszum/") else "Oldalak"
+        key = ("Esettanulmányok" if m["path"].startswith("/munkak/")
+               else "Optional" if m["path"] in ("/adatkezeles/", "/impresszum/")
+               else "Szolgáltatások" if m.get("service")
+               else "Oldalak")
         title = m["title"].replace(" | Reverb Content", "")
         groups[key].append("- [%s](%s%s): %s" % (title, BASE, m["path"], m["description"]))
     text = "# Reverb Content\n\n> %s\n\n%s Kapcsolat: %s, %s.\n" % (
@@ -209,6 +254,7 @@ for name in sorted(os.listdir(os.path.join(HERE, "pages"))):
     if not meta.get("noindex"):
         metas.append(meta)
     body = expand(raw[m.end():].rstrip())
+    meta["faq"] = faq_pairs(body)
     page = (
         head(meta)
         + DEFS
